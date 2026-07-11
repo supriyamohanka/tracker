@@ -3,902 +3,159 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Supriya's 30-Day Job Switch Sprint</title>
-  <meta name="description" content="A simple 30-day job switch tracker for brand, growth and digital marketing roles." />
+  <title>30-Day Job Switch Tracker</title>
+  <meta name="description" content="A compact 30-day job switch tracker for Supriya." />
   <style>
-    :root {
-      --bg: #fff8ef;
-      --card: #ffffff;
-      --ink: #2a211d;
-      --muted: #75675f;
-      --line: #eadbcd;
-      --accent: #a5482b;
-      --accent-2: #f2c46d;
-      --soft: #f7eadc;
-      --green: #327a55;
-      --red: #b5483d;
-      --shadow: 0 14px 40px rgba(60, 34, 20, 0.08);
-      --radius: 22px;
+    :root{
+      --bg:#faf7f2; --card:#fff; --ink:#29231f; --muted:#746b63;
+      --line:#e8ded4; --accent:#8f3f2a; --soft:#f2e8dd; --done:#2d7a51;
     }
-
-    * { box-sizing: border-box; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(242,196,109,0.28), transparent 32rem),
-        radial-gradient(circle at 88% 5%, rgba(165,72,43,0.13), transparent 25rem),
-        var(--bg);
-      color: var(--ink);
-      line-height: 1.5;
-    }
-
-    .page {
-      width: min(1120px, calc(100% - 28px));
-      margin: 0 auto;
-      padding: 28px 0 48px;
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: 1.3fr 0.7fr;
-      gap: 20px;
-      align-items: stretch;
-      margin-bottom: 20px;
-    }
-
-    .hero-main,
-    .hero-side,
-    .panel,
-    .day-card {
-      background: rgba(255,255,255,0.86);
-      backdrop-filter: blur(14px);
-      border: 1px solid rgba(234,219,205,0.9);
-      box-shadow: var(--shadow);
-      border-radius: var(--radius);
-    }
-
-    .hero-main { padding: 30px; }
-    .hero-side { padding: 22px; }
-
-    .eyebrow {
-      display: inline-flex;
-      gap: 8px;
-      align-items: center;
-      font-weight: 800;
-      font-size: 12px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent);
-      background: var(--soft);
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 8px 12px;
-      margin-bottom: 16px;
-    }
-
-    h1 {
-      font-size: clamp(34px, 5vw, 64px);
-      line-height: 0.97;
-      margin: 0 0 16px;
-      letter-spacing: -0.05em;
-    }
-
-    .subtitle {
-      font-size: 18px;
-      color: var(--muted);
-      max-width: 700px;
-      margin: 0;
-    }
-
-    .quick-rule {
-      margin-top: 20px;
-      padding: 16px;
-      border-radius: 18px;
-      background: #2a211d;
-      color: #fff8ef;
-      font-weight: 700;
-    }
-
-    .stat-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 16px;
-    }
-
-    .stat {
-      padding: 14px;
-      border-radius: 16px;
-      background: var(--soft);
-      border: 1px solid var(--line);
-    }
-
-    .stat .num {
-      display: block;
-      font-size: 28px;
-      font-weight: 900;
-      letter-spacing: -0.03em;
-    }
-
-    .stat .label {
-      display: block;
-      font-size: 12px;
-      color: var(--muted);
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .progress-wrap {
-      margin-top: 16px;
-    }
-
-    .progress-label {
-      display: flex;
-      justify-content: space-between;
-      font-size: 13px;
-      font-weight: 800;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
-
-    .bar {
-      height: 14px;
-      border-radius: 999px;
-      background: var(--soft);
-      border: 1px solid var(--line);
-      overflow: hidden;
-    }
-
-    .bar > span {
-      display: block;
-      height: 100%;
-      width: 0%;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      transition: width 0.25s ease;
-    }
-
-    .controls {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    label.small {
-      font-size: 12px;
-      font-weight: 800;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    input[type="date"],
-    input[type="text"],
-    textarea,
-    select {
-      width: 100%;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.9);
-      border-radius: 14px;
-      padding: 12px 13px;
-      color: var(--ink);
-      font: inherit;
-      outline: none;
-    }
-
-    textarea {
-      min-height: 78px;
-      resize: vertical;
-    }
-
-    input:focus,
-    textarea:focus,
-    select:focus {
-      border-color: rgba(165,72,43,0.55);
-      box-shadow: 0 0 0 4px rgba(165,72,43,0.10);
-    }
-
-    button,
-    .file-label {
-      border: 0;
-      border-radius: 999px;
-      padding: 12px 15px;
-      font: inherit;
-      font-weight: 850;
-      cursor: pointer;
-      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      text-decoration: none;
-    }
-
-    button:active,
-    .file-label:active { transform: translateY(1px); }
-
-    .btn-primary {
-      background: var(--accent);
-      color: white;
-      box-shadow: 0 10px 22px rgba(165,72,43,0.18);
-    }
-
-    .btn-soft {
-      background: var(--soft);
-      color: var(--ink);
-      border: 1px solid var(--line);
-    }
-
-    .btn-danger {
-      background: #fff1ef;
-      color: var(--red);
-      border: 1px solid #f1cbc6;
-    }
-
-    .top-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 20px 0;
-    }
-
-    .panel {
-      padding: 22px;
-      margin-bottom: 20px;
-    }
-
-    .panel h2 {
-      margin: 0 0 8px;
-      font-size: 24px;
-      letter-spacing: -0.03em;
-    }
-
-    .panel p { margin: 0; color: var(--muted); }
-
-    .mini-plan {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 16px;
-    }
-
-    .mini-card {
-      padding: 16px;
-      border: 1px solid var(--line);
-      background: rgba(247,234,220,0.7);
-      border-radius: 18px;
-    }
-
-    .mini-card strong {
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    .mini-card span {
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .week-tabs {
-      position: sticky;
-      top: 0;
-      z-index: 4;
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding: 10px 0 12px;
-      margin-bottom: 8px;
-      background: linear-gradient(var(--bg), rgba(255,248,239,0.86));
-      backdrop-filter: blur(8px);
-    }
-
-    .week-tabs a {
-      white-space: nowrap;
-      color: var(--ink);
-      text-decoration: none;
-      font-weight: 850;
-      background: rgba(255,255,255,0.85);
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 10px 13px;
-    }
-
-    .week-title {
-      margin: 24px 0 12px;
-      font-size: 28px;
-      letter-spacing: -0.04em;
-    }
-
-    .days {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .day-card {
-      padding: 18px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .day-card.done {
-      border-color: rgba(50,122,85,0.34);
-      background: rgba(255,255,255,0.94);
-    }
-
-    .day-card.today {
-      outline: 3px solid rgba(242,196,109,0.65);
-    }
-
-    .day-head {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-
-    .day-number {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      font-weight: 900;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .date-pill {
-      font-size: 12px;
-      font-weight: 800;
-      color: var(--muted);
-      background: var(--soft);
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 6px 9px;
-      white-space: nowrap;
-    }
-
-    .day-card h3 {
-      margin: 4px 0 6px;
-      font-size: 22px;
-      letter-spacing: -0.03em;
-    }
-
-    .focus {
-      margin: 0 0 14px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .checks {
-      display: grid;
-      gap: 10px;
-      margin: 14px 0;
-    }
-
-    .check-row {
-      display: grid;
-      grid-template-columns: 24px 1fr;
-      gap: 10px;
-      align-items: start;
-      padding: 10px;
-      border-radius: 14px;
-      background: rgba(247,234,220,0.55);
-      border: 1px solid rgba(234,219,205,0.9);
-    }
-
-    input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      accent-color: var(--accent);
-      margin-top: 2px;
-    }
-
-    .check-row span {
-      font-weight: 730;
-    }
-
-    .field-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 12px;
-    }
-
-    .full { grid-column: 1 / -1; }
-
-    .completion {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 12px;
-      gap: 10px;
-    }
-
-    .status {
-      font-size: 13px;
-      color: var(--muted);
-      font-weight: 850;
-    }
-
-    .done-tag {
-      display: none;
-      color: var(--green);
-      font-weight: 900;
-      font-size: 13px;
-    }
-
-    .day-card.done .done-tag { display: inline; }
-
-    .footer {
-      margin-top: 28px;
-      padding: 22px;
-      border-radius: var(--radius);
-      background: #2a211d;
-      color: #fff8ef;
-    }
-
-    .footer p { margin: 0; color: rgba(255,248,239,0.8); }
-
-    .hidden-file { display: none; }
-
-    .toast {
-      position: fixed;
-      left: 50%;
-      bottom: 24px;
-      transform: translateX(-50%) translateY(90px);
-      background: #2a211d;
-      color: #fff8ef;
-      border-radius: 999px;
-      padding: 12px 16px;
-      box-shadow: var(--shadow);
-      font-weight: 800;
-      transition: transform 0.25s ease;
-      z-index: 20;
-    }
-
-    .toast.show { transform: translateX(-50%) translateY(0); }
-
-    @media (max-width: 850px) {
-      .hero { grid-template-columns: 1fr; }
-      .days { grid-template-columns: 1fr; }
-      .mini-plan { grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 560px) {
-      .page { width: min(100% - 18px, 1120px); padding-top: 12px; }
-      .hero-main, .hero-side, .panel, .day-card { border-radius: 18px; }
-      .hero-main { padding: 22px; }
-      .controls, .field-grid { grid-template-columns: 1fr; }
-      .top-actions button, .top-actions .file-label { flex: 1 1 100%; }
-    }
-
-    @media print {
-      body { background: #fff; }
-      .week-tabs, .top-actions, .controls, .completion button, .toast { display: none !important; }
-      .page { width: 100%; padding: 0; }
-      .hero, .days { display: block; }
-      .hero-main, .hero-side, .panel, .day-card { box-shadow: none; page-break-inside: avoid; margin-bottom: 12px; }
-    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.35}
+    .app{max-width:860px;margin:0 auto;padding:14px}
+    .top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:10px}
+    h1{font-size:22px;line-height:1.05;margin:0 0 4px;letter-spacing:-.03em}
+    .sub{margin:0;color:var(--muted);font-size:13px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:0 8px 22px rgba(40,25,12,.05)}
+    .summary{min-width:240px}
+    .summary-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+    .stat{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:8px;text-align:center}
+    .stat b{display:block;font-size:18px}.stat span{display:block;font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+    .bar{height:8px;background:var(--soft);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+    .bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:99px}
+    .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+    button,.fileBtn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 11px;font:inherit;font-weight:750;cursor:pointer;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+    button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+    button.danger{color:#ad392e;background:#fff7f6;border-color:#efcac5}
+    input[type="date"],input[type="text"],textarea{width:100%;border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 10px;font:inherit;color:var(--ink);outline:none}
+    textarea{min-height:66px;resize:vertical}
+    label.small{display:block;font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin:0 0 5px}
+    .startBox{display:grid;grid-template-columns:130px 1fr;gap:10px;align-items:end;margin:8px 0 10px}
+    .daysGrid{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin:10px 0 12px}
+    .dayBtn{border-radius:10px;padding:8px 0;background:#fff;position:relative}
+    .dayBtn.done{background:#e8f4ed;border-color:#bbdcc9;color:var(--done)}
+    .dayBtn.today{outline:2px solid #e7b865}
+    .dayBtn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+    .mainGrid{display:grid;grid-template-columns:1fr 260px;gap:12px}
+    .dayTitle{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:10px}
+    .dayTitle h2{font-size:19px;margin:0 0 4px;letter-spacing:-.02em}.pill{font-size:12px;background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:5px 8px;color:var(--muted);font-weight:750;white-space:nowrap}
+    .weekFocus{font-size:13px;color:var(--muted);margin:0}.checks{display:grid;gap:8px;margin:12px 0}.check{display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:start;border:1px solid var(--line);border-radius:12px;padding:9px;background:#fffaf5}.check strong{display:block;font-size:13px}.check span{display:block;color:var(--muted);font-size:13px;margin-top:1px}input[type="checkbox"]{width:17px;height:17px;accent-color:var(--accent);margin-top:1px}
+    .fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}.full{grid-column:1/-1}.side h3{font-size:15px;margin:0 0 8px}.side ul{margin:0;padding-left:18px;color:var(--muted)}.side li{margin-bottom:6px}.tiny{font-size:12px;color:var(--muted);margin-top:10px}.hidden{display:none}.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(80px);background:#29231f;color:#fff;border-radius:999px;padding:9px 13px;font-weight:750;transition:.2s}.toast.show{transform:translateX(-50%) translateY(0)}
+    @media(max-width:760px){.top,.mainGrid{grid-template-columns:1fr;display:grid}.summary{min-width:0}.daysGrid{grid-template-columns:repeat(6,1fr)}.fields,.startBox{grid-template-columns:1fr}h1{font-size:20px}.app{padding:10px}.card{border-radius:14px;padding:12px}}
   </style>
 </head>
 <body>
-  <div class="page">
-    <section class="hero">
-      <div class="hero-main">
-        <div class="eyebrow">30-Day Job Switch Sprint</div>
-        <h1>Show proof. Build daily. Apply smart.</h1>
-        <p class="subtitle">A simple tracker for moving from retail leasing into brand, growth, D2C, category, CRM or digital marketing roles — without over-planning.</p>
-        <div class="quick-rule">Daily minimum: 30 min learning + 60 min output + 20 min job action.</div>
+  <main class="app">
+    <section class="top">
+      <div class="card" style="flex:1">
+        <h1>30-Day Job Switch Tracker</h1>
+        <p class="sub">Keep it simple: tick 3 boxes daily. Add one proof link or note. That’s it.</p>
+        <div class="startBox">
+          <div><label class="small" for="startDate">Start date</label><input id="startDate" type="date"></div>
+          <div class="toolbar" style="margin:0"><button class="primary" id="todayBtn">Today</button><button id="completeBtn">Mark selected done</button><button id="exportBtn">Backup</button><label class="fileBtn" for="importFile">Import</label><input id="importFile" class="hidden" type="file" accept="application/json"><button class="danger" id="resetBtn">Reset</button></div>
+        </div>
       </div>
-      <aside class="hero-side">
-        <label class="small" for="startDate">Sprint start date</label>
-        <input id="startDate" type="date" />
-        <div class="stat-grid">
-          <div class="stat"><span class="num" id="daysDone">0</span><span class="label">Days done</span></div>
-          <div class="stat"><span class="num" id="streak">0</span><span class="label">Current streak</span></div>
-          <div class="stat"><span class="num" id="certsDone">0</span><span class="label">Certs logged</span></div>
-          <div class="stat"><span class="num" id="jobsDone">0</span><span class="label">Job actions</span></div>
-        </div>
-        <div class="progress-wrap">
-          <div class="progress-label"><span>Overall progress</span><span id="progressText">0%</span></div>
-          <div class="bar"><span id="progressBar"></span></div>
-        </div>
-        <div class="controls">
-          <button class="btn-primary" id="goToday">Go to today</button>
-          <button class="btn-soft" id="markToday">Mark today done</button>
-        </div>
+      <aside class="card summary">
+        <div class="summary-row"><div class="stat"><b id="doneCount">0</b><span>Done</span></div><div class="stat"><b id="leftCount">30</b><span>Left</span></div><div class="stat"><b id="percentText">0%</b><span>Progress</span></div></div>
+        <div class="bar"><i id="barFill"></i></div>
       </aside>
     </section>
 
-    <div class="top-actions">
-      <button class="btn-soft" id="exportBtn">Export backup</button>
-      <label class="file-label btn-soft" for="importFile">Import backup</label>
-      <input class="hidden-file" id="importFile" type="file" accept="application/json" />
-      <button class="btn-soft" onclick="window.print()">Print / Save PDF</button>
-      <button class="btn-danger" id="resetBtn">Reset progress</button>
-    </div>
-
-    <section class="panel">
-      <h2>How to use this daily</h2>
-      <p>Open this page once a day. Tick the three boxes. Paste one proof link or note. Done. No Excel, no long tracker, no guilt.</p>
-      <div class="mini-plan">
-        <div class="mini-card"><strong>Learn</strong><span>One concept only: GA4, ads, SEO, CRM, marketplace or campaign metrics.</span></div>
-        <div class="mini-card"><strong>Build</strong><span>One visible output: case study, dashboard, website section, LinkedIn post or campaign brief.</span></div>
-        <div class="mini-card"><strong>Apply</strong><span>One job action: JD analysis, recruiter message, application, referral or profile update.</span></div>
-      </div>
+    <section class="card">
+      <label class="small">Pick a day</label>
+      <div class="daysGrid" id="daysGrid"></div>
+      <section class="mainGrid">
+        <article id="dayCard"></article>
+        <aside class="side">
+          <h3>This 30 days is only for:</h3>
+          <ul>
+            <li>1 strong case study</li>
+            <li>GA4 basics/certification</li>
+            <li>Resume + LinkedIn cleanup</li>
+            <li>Targeted job applications</li>
+          </ul>
+          <p class="tiny">Avoid: random courses, redesign rabbit holes, and overthinking.</p>
+        </aside>
+      </section>
     </section>
-
-    <nav class="week-tabs">
-      <a href="#week-1">Week 1: Direction</a>
-      <a href="#week-2">Week 2: Case Study</a>
-      <a href="#week-3">Week 3: Campaigns</a>
-      <a href="#week-4">Week 4: Jobs</a>
-      <a href="#week-5">Final 2 Days</a>
-    </nav>
-
-    <main id="tracker"></main>
-
-    <section class="footer">
-      <h2 style="margin:0 0 8px;">The rule for consistency</h2>
-      <p>Even on a bad day, do the minimum: one checkbox + one note. The goal is not perfection. The goal is proof that compounds.</p>
-    </section>
-  </div>
-
+  </main>
   <div class="toast" id="toast">Saved</div>
 
-  <script>
-    const STORAGE_KEY = "supriya-job-switch-30-day-v1";
-    const START_KEY = "supriya-job-switch-start-date-v1";
-
-    const plan = [
-      { week: 1, title: "Direction + Foundation", focus: "Make the switch clear and start one portfolio output.", days: [
-        [1, "Role Mapping", "Pick 10 JDs for brand/growth/category/digital roles and highlight repeated skills.", "Create Dot & Key case study skeleton.", "Write 5 GA4 basics in your own words."],
-        [2, "Positioning", "Finalize 3 target roles.", "Rewrite resume headline + LinkedIn headline draft.", "Save 5 strong JD keywords to use in resume."],
-        [3, "Website Measurement", "Add/check GA4 and Search Console on your website.", "Write website baseline: pages, goal, CTA.", "Note one conversion you want to track."],
-        [4, "GA4 Basics", "Learn traffic acquisition and events.", "Write a simple GA4 glossary for yourself.", "Find one marketing role asking for analytics."],
-        [5, "Amazon Audit", "Audit Dot & Key Amazon title, images and A+ content.", "Capture screenshots or links.", "Note 3 visible improvement areas."],
-        [6, "Customer Pain Points", "Read Amazon reviews and pull 3 customer pain points.", "Turn pain points into 3 campaign ideas.", "Draft one case-study insight paragraph."],
-        [7, "LinkedIn Post 1", "Write one LinkedIn post from the audit.", "Post or save it for posting.", "Review Week 1 and mark what is incomplete."]
-      ]},
-      { week: 2, title: "First Strong Case Study", focus: "Convert Dot & Key audit into a portfolio-ready case study.", days: [
-        [8, "Case Study Structure", "Write the full Dot & Key case study outline.", "Add: context, audit, pain points, ideas, dashboard, recommendation.", "Keep it concise and visual."],
-        [9, "Mock Dashboard", "Create basic metrics: impressions, CTR, CVR, ROAS, repeat purchase.", "Add one chart or table.", "Write what each metric means."],
-        [10, "GA4 Certification", "Study GA4 certification modules.", "Note 5 interview-ready analytics lines.", "Add GA4 to tracker when completed."],
-        [11, "Website Update", "Create or update one case-study page on your website.", "Add Dot & Key as a portfolio project.", "Check mobile readability."],
-        [12, "SEO Basics", "Learn keyword research and on-page SEO basics.", "Make 10 keywords for your website/profile.", "Update one title/meta section if possible."],
-        [13, "Resume Bullets", "Rewrite 5 resume bullets to sound more marketing-focused.", "Add measurable outcomes where possible.", "Save a brand/growth version of resume."],
-        [14, "Applications Round 1", "Apply to 5 targeted roles.", "Send 2 referral/recruiter messages.", "Post or schedule one LinkedIn learning update."]
-      ]},
-      { week: 3, title: "Campaign + CRM Skills", focus: "Learn enough ads/CRM to sound practical in interviews.", days: [
-        [15, "Meta Ads Basics", "Learn objective, audience, creative, pixel and retargeting.", "Draft one ad idea for your portfolio website.", "Write one KPI per objective."],
-        [16, "Campaign Brief", "Create campaign brief: audience, message, creative, landing page, CTA.", "Write 3 ad copy options.", "Pick the strongest one."],
-        [17, "UTM + CTA", "Learn UTM links and tracking.", "Create a CTA for your website: View case studies / Contact me.", "Write how you would measure it."],
-        [18, "HubSpot / Email", "Start HubSpot Email or Inbound Marketing certification.", "Learn welcome flow, segmentation and open/click rates.", "Write one email flow idea for a D2C brand."],
-        [19, "CRM Flows", "Create 3 lifecycle flows: welcome, abandoned cart, reactivation.", "Add trigger, message and KPI for each.", "Save as portfolio mini-section."],
-        [20, "LinkedIn Post 2", "Write a post on one CRM/growth insight.", "Connect it to a brand example.", "Post or save it."],
-        [21, "Applications Round 2", "Apply to 5 more roles.", "Message 3 people in marketing roles.", "Update tracker with responses."],
-      ]},
-      { week: 4, title: "Portfolio Packaging + Jobs", focus: "Turn learning into interview and application material.", days: [
-        [22, "Google Ads Basics", "Learn search ads, keywords, quality score and landing page relevance.", "Write one sample Google ad for your website.", "Note 5 keywords recruiters may search."],
-        [23, "Mini Case 2", "Pick second case: Foxtale website teardown, Westside travel line, or Pine Labs coffee posts.", "Create a one-page structure.", "Add the business problem clearly."],
-        [24, "Mini Case 2 Build", "Finish the second mini case study.", "Add 3 insights + 3 recommendations.", "Add it to website or save as PDF."],
-        [25, "Interview Prep", "Write answers for: Tell me about yourself, Why marketing, Why switch now.", "Prepare 3 project stories using STAR format.", "Practice aloud once."],
-        [26, "Resume Final", "Finalize resume for brand/growth roles.", "Remove weak/generic lines.", "Add portfolio website link clearly."],
-        [27, "LinkedIn Final", "Update LinkedIn About, Featured, headline and projects.", "Add case study links to Featured.", "Post one job-switch positioning post if ready."],
-        [28, "Applications Round 3", "Apply to 10 targeted roles.", "Send 5 referral messages.", "Track role, company, link and status in notes."],
-      ]},
-      { week: 5, title: "Final 2 Days", focus: "Close the sprint and decide the next push.", days: [
-        [29, "Recruiter Push", "Send 10 short messages to recruiters/hiring managers.", "Attach resume + portfolio link.", "Follow up on old warm leads."],
-        [30, "Review + Next Plan", "Review all 30 days honestly.", "List completed assets and weak gaps.", "Create the next 15-day plan based on job responses."],
-      ]}
-    ];
-
-    let state = loadState();
-
-    function todayISO() {
-      const d = new Date();
-      const local = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
-      return local.toISOString().slice(0, 10);
-    }
-
-    function addDays(iso, days) {
-      const d = new Date(iso + "T00:00:00");
-      d.setDate(d.getDate() + days);
-      return d.toISOString().slice(0, 10);
-    }
-
-    function formatDate(iso) {
-      const d = new Date(iso + "T00:00:00");
-      return d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
-    }
-
-    function loadState() {
-      try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
-      } catch (e) {
-        return {};
-      }
-    }
-
-    function saveState() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      showToast("Saved");
-      updateStats();
-    }
-
-    function showToast(message) {
-      const toast = document.getElementById("toast");
-      toast.textContent = message;
-      toast.classList.add("show");
-      clearTimeout(window.toastTimer);
-      window.toastTimer = setTimeout(() => toast.classList.remove("show"), 1200);
-    }
-
-    function flattenPlan() {
-      return plan.flatMap(w => w.days.map(d => ({ week: w.week, weekTitle: w.title, focus: w.focus, day: d[0], title: d[1], tasks: d.slice(2) })));
-    }
-
-    function getStartDate() {
-      return localStorage.getItem(START_KEY) || "2026-07-11";
-    }
-
-    function setStartDate(iso) {
-      localStorage.setItem(START_KEY, iso);
-      render();
-      updateStats();
-    }
-
-    function dayDate(day) {
-      return addDays(getStartDate(), day - 1);
-    }
-
-    function getDayState(day) {
-      if (!state[day]) {
-        state[day] = { checks: [false, false, false], proof: "", jobAction: "", notes: "", cert: "" };
-      }
-      return state[day];
-    }
-
-    function isDayDone(day) {
-      const s = getDayState(day);
-      return s.checks.every(Boolean);
-    }
-
-    function render() {
-      document.getElementById("startDate").value = getStartDate();
-      const tracker = document.getElementById("tracker");
-      tracker.innerHTML = "";
-      const currentISO = todayISO();
-
-      plan.forEach(week => {
-        const section = document.createElement("section");
-        section.id = `week-${week.week}`;
-        const title = document.createElement("h2");
-        title.className = "week-title";
-        title.textContent = `Week ${week.week}: ${week.title}`;
-        section.appendChild(title);
-
-        const grid = document.createElement("div");
-        grid.className = "days";
-
-        week.days.forEach(raw => {
-          const [day, titleText, ...tasks] = raw;
-          const s = getDayState(day);
-          const card = document.createElement("article");
-          card.className = "day-card";
-          if (isDayDone(day)) card.classList.add("done");
-          if (dayDate(day) === currentISO) card.classList.add("today");
-          card.id = `day-${day}`;
-
-          const checks = tasks.map((task, idx) => `
-            <label class="check-row">
-              <input type="checkbox" data-day="${day}" data-check="${idx}" ${s.checks[idx] ? "checked" : ""} />
-              <span>${escapeHTML(task)}</span>
-            </label>
-          `).join("");
-
-          card.innerHTML = `
-            <div class="day-head">
-              <div>
-                <div class="day-number">Day ${day}</div>
-                <h3>${escapeHTML(titleText)}</h3>
-                <p class="focus">${escapeHTML(week.focus)}</p>
-              </div>
-              <div class="date-pill">${formatDate(dayDate(day))}</div>
-            </div>
-            <div class="checks">${checks}</div>
-            <div class="field-grid">
-              <div>
-                <label class="small">Proof link / output</label>
-                <input type="text" data-day="${day}" data-field="proof" value="${escapeAttr(s.proof)}" placeholder="Paste website, doc, post or file link" />
-              </div>
-              <div>
-                <label class="small">Job action</label>
-                <select data-day="${day}" data-field="jobAction">
-                  ${["", "JD analyzed", "Applied", "Referral message", "Recruiter message", "Profile update", "Interview prep"].map(v => `<option value="${v}" ${s.jobAction === v ? "selected" : ""}>${v || "Choose"}</option>`).join("")}
-                </select>
-              </div>
-              <div>
-                <label class="small">Certification</label>
-                <select data-day="${day}" data-field="cert">
-                  ${["", "GA4", "HubSpot", "Google Ads", "Meta basics", "SEO basics"].map(v => `<option value="${v}" ${s.cert === v ? "selected" : ""}>${v || "None"}</option>`).join("")}
-                </select>
-              </div>
-              <div>
-                <label class="small">Energy level</label>
-                <select data-day="${day}" data-field="energy">
-                  ${["", "Low", "Medium", "High"].map(v => `<option value="${v}" ${s.energy === v ? "selected" : ""}>${v || "Choose"}</option>`).join("")}
-                </select>
-              </div>
-              <div class="full">
-                <label class="small">Notes</label>
-                <textarea data-day="${day}" data-field="notes" placeholder="What did you finish? What is pending?">${escapeHTML(s.notes)}</textarea>
-              </div>
-            </div>
-            <div class="completion">
-              <span class="status"><span class="done-tag">Completed · </span>${s.checks.filter(Boolean).length}/3 tasks checked</span>
-              <button class="btn-soft" data-complete-day="${day}">Mark day complete</button>
-            </div>
-          `;
-
-          grid.appendChild(card);
-        });
-
-        section.appendChild(grid);
-        tracker.appendChild(section);
-      });
-
-      bindInputs();
-    }
-
-    function bindInputs() {
-      document.querySelectorAll("input[type='checkbox'][data-check]").forEach(input => {
-        input.addEventListener("change", e => {
-          const day = e.target.dataset.day;
-          const idx = Number(e.target.dataset.check);
-          getDayState(day).checks[idx] = e.target.checked;
-          saveState();
-          refreshCard(day);
-        });
-      });
-
-      document.querySelectorAll("input[data-field], textarea[data-field], select[data-field]").forEach(input => {
-        input.addEventListener("input", e => {
-          const day = e.target.dataset.day;
-          const field = e.target.dataset.field;
-          getDayState(day)[field] = e.target.value;
-          saveState();
-        });
-        input.addEventListener("change", e => {
-          const day = e.target.dataset.day;
-          const field = e.target.dataset.field;
-          getDayState(day)[field] = e.target.value;
-          saveState();
-        });
-      });
-
-      document.querySelectorAll("button[data-complete-day]").forEach(button => {
-        button.addEventListener("click", e => {
-          const day = e.target.dataset.completeDay;
-          getDayState(day).checks = [true, true, true];
-          saveState();
-          render();
-          document.getElementById(`day-${day}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
-        });
-      });
-    }
-
-    function refreshCard(day) {
-      const card = document.getElementById(`day-${day}`);
-      if (!card) return;
-      card.classList.toggle("done", isDayDone(day));
-      const status = card.querySelector(".status");
-      const s = getDayState(day);
-      status.innerHTML = `${isDayDone(day) ? '<span class="done-tag">Completed · </span>' : ''}${s.checks.filter(Boolean).length}/3 tasks checked`;
-    }
-
-    function updateStats() {
-      const days = flattenPlan();
-      const done = days.filter(d => isDayDone(d.day)).length;
-      const certs = days.filter(d => getDayState(d.day).cert).length;
-      const jobs = days.filter(d => getDayState(d.day).jobAction).length;
-      const percent = Math.round((done / 30) * 100);
-      document.getElementById("daysDone").textContent = done;
-      document.getElementById("certsDone").textContent = certs;
-      document.getElementById("jobsDone").textContent = jobs;
-      document.getElementById("progressText").textContent = `${percent}%`;
-      document.getElementById("progressBar").style.width = `${percent}%`;
-      document.getElementById("streak").textContent = calculateStreak(days);
-    }
-
-    function calculateStreak(days) {
-      let streak = 0;
-      for (let i = 1; i <= 30; i++) {
-        if (isDayDone(i)) streak++;
-        else streak = 0;
-      }
-      return streak;
-    }
-
-    function escapeHTML(str = "") {
-      return String(str).replace(/[&<>"]/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
-    }
-
-    function escapeAttr(str = "") {
-      return escapeHTML(str).replace(/'/g, "&#039;");
-    }
-
-    document.getElementById("startDate").addEventListener("change", e => setStartDate(e.target.value));
-
-    document.getElementById("goToday").addEventListener("click", () => {
-      const start = getStartDate();
-      const diff = Math.floor((new Date(todayISO()) - new Date(start)) / (1000 * 60 * 60 * 24)) + 1;
-      const day = Math.min(Math.max(diff, 1), 30);
-      document.getElementById(`day-${day}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
-    });
-
-    document.getElementById("markToday").addEventListener("click", () => {
-      const start = getStartDate();
-      const diff = Math.floor((new Date(todayISO()) - new Date(start)) / (1000 * 60 * 60 * 24)) + 1;
-      const day = Math.min(Math.max(diff, 1), 30);
-      getDayState(day).checks = [true, true, true];
-      saveState();
-      render();
-      document.getElementById(`day-${day}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
-    });
-
-    document.getElementById("exportBtn").addEventListener("click", () => {
-      const payload = { startDate: getStartDate(), state, exportedAt: new Date().toISOString() };
-      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "supriya-30-day-job-switch-backup.json";
-      a.click();
-      URL.revokeObjectURL(url);
-    });
-
-    document.getElementById("importFile").addEventListener("change", e => {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = () => {
-        try {
-          const payload = JSON.parse(reader.result);
-          if (payload.startDate) localStorage.setItem(START_KEY, payload.startDate);
-          state = payload.state || payload;
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-          render();
-          updateStats();
-          showToast("Backup imported");
-        } catch (err) {
-          showToast("Could not import file");
-        }
-      };
-      reader.readAsText(file);
-    });
-
-    document.getElementById("resetBtn").addEventListener("click", () => {
-      const ok = confirm("Reset all tracker progress? This cannot be undone unless you exported a backup.");
-      if (!ok) return;
-      state = {};
-      localStorage.removeItem(STORAGE_KEY);
-      render();
-      updateStats();
-      showToast("Progress reset");
-    });
-
-    render();
-    updateStats();
-  </script>
+<script>
+const STORAGE_KEY="supriya-job-switch-30-day-v1";
+const START_KEY="supriya-job-switch-start-date-v1";
+let selectedDay=1;
+const plan=[
+["Role mapping","Study 10 job descriptions","Create Dot & Key skeleton","Save repeated skills/keywords"],
+["Positioning","Finalize 3 target roles","Draft LinkedIn/resume headline","Save 5 resume keywords"],
+["Website measurement","Learn GA4 setup basics","Define website CTA/conversion","Check/add GA4 & Search Console"],
+["GA4 basics","Learn users/sessions/events","Write 5 simple GA4 notes","Find 1 role asking analytics"],
+["Amazon audit","Review Dot & Key title/images/A+","Capture links/screenshots","Note 3 issues"],
+["Review insights","Read reviews for pain points","Create 3 campaign ideas","Write 1 insight paragraph"],
+["LinkedIn post 1","Learn one example post style","Draft/post Dot & Key insight","Review Week 1 gaps"],
+["Case study outline","Learn case-study structure","Write Dot & Key full outline","Add context/audit/reco"],
+["Mock dashboard","Learn CTR/CVR/ROAS basics","Create simple dashboard table","Write metric meanings"],
+["GA4 certification","Study GA4 module","Write 5 interview lines","Log progress/cert"],
+["Website update","Learn portfolio page structure","Add/update case-study page","Check mobile view"],
+["SEO basics","Learn keywords/on-page SEO","Make 10 website keywords","Update one title/meta line"],
+["Resume bullets","Study strong marketing bullets","Rewrite 5 resume bullets","Save brand/growth resume"],
+["Apply round 1","Read 5 targeted JDs","Apply to 5 roles","Send 2 referral messages"],
+["Meta basics","Learn objective/audience/creative","Draft 1 ad idea","Write KPI for it"],
+["Campaign brief","Learn campaign brief format","Write audience/message/CTA","Draft 3 ad copies"],
+["Tracking","Learn UTM basics","Create website CTA idea","Write measurement plan"],
+["HubSpot basics","Start Email/Inbound module","Learn segmentation/flows","Write one email flow idea"],
+["CRM flows","Study welcome/cart/reactivation","Create 3 lifecycle flows","Add triggers + KPIs"],
+["LinkedIn post 2","Learn one growth example","Draft/post CRM insight","Save comments/feedback"],
+["Apply round 2","Review 5 roles","Apply to 5 roles","Message 3 marketers"],
+["Google Ads basics","Learn keywords/search ads","Write one sample ad","List 5 recruiter keywords"],
+["Mini case 2","Pick second case topic","Create 1-page structure","Define business problem"],
+["Mini case build","Study recommendation format","Add 3 insights + 3 recos","Add/save mini case"],
+["Interview prep","Learn STAR format","Write 3 project stories","Practice answers aloud"],
+["Resume final","Review resume once","Finalize brand/growth resume","Add portfolio link"],
+["LinkedIn final","Review profile sections","Update About/Featured/projects","Add case links"],
+["Apply round 3","Shortlist 10 roles","Apply to 10 roles","Send 5 referral messages"],
+["Recruiter push","Write short outreach message","Send 10 messages","Follow up warm leads"],
+["Review","Review completed assets","List weak gaps","Create next 15-day plan"]
+];
+const weekFocus=["Direction + foundation","First case study","Campaign + CRM skills","Portfolio packaging + jobs","Final push"];
+function todayISO(){const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,10)}
+function addDays(iso,n){const d=new Date(iso+"T00:00:00");d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)}
+function fmt(iso){return new Date(iso+"T00:00:00").toLocaleDateString(undefined,{month:"short",day:"numeric"})}
+function getStart(){return localStorage.getItem(START_KEY)||todayISO()}
+function setStart(v){localStorage.setItem(START_KEY,v);render()}
+function load(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY))||{}}catch(e){return {}}}
+let state=load();
+function dayState(d){if(!state[d])state[d]={checks:[false,false,false],proof:"",notes:""};return state[d]}
+function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state));stats();toast("Saved")}
+function isDone(d){return dayState(d).checks.every(Boolean)}
+function currentDay(){const diff=Math.floor((new Date(todayISO())-new Date(getStart()))/(86400000))+1;return Math.min(Math.max(diff,1),30)}
+function weekOf(day){return day<=7?1:day<=14?2:day<=21?3:day<=28?4:5}
+function render(){document.getElementById("startDate").value=getStart();renderDayButtons();renderCard();stats()}
+function renderDayButtons(){const grid=document.getElementById("daysGrid");grid.innerHTML="";for(let i=1;i<=30;i++){const b=document.createElement("button");b.className="dayBtn"+(isDone(i)?" done":"")+(i===selectedDay?" active":"")+(i===currentDay()?" today":"");b.textContent=i;b.onclick=()=>{selectedDay=i;render()};grid.appendChild(b)}}
+function renderCard(){const p=plan[selectedDay-1],s=dayState(selectedDay),date=fmt(addDays(getStart(),selectedDay-1));document.getElementById("dayCard").innerHTML=`
+  <div class="dayTitle"><div><h2>Day ${selectedDay}: ${esc(p[0])}</h2><p class="weekFocus">Week ${weekOf(selectedDay)}: ${weekFocus[weekOf(selectedDay)-1]}</p></div><span class="pill">${date}</span></div>
+  <div class="checks">
+    ${["Learn","Build","Job action"].map((label,i)=>`<label class="check"><input type="checkbox" data-i="${i}" ${s.checks[i]?"checked":""}><div><strong>${label}</strong><span>${esc(p[i+1])}</span></div></label>`).join("")}
+  </div>
+  <div class="fields">
+    <div><label class="small">Proof / link</label><input id="proof" type="text" value="${attr(s.proof)}" placeholder="LinkedIn, website, doc, resume link"></div>
+    <div class="full"><label class="small">Tiny note</label><textarea id="notes" placeholder="What did you actually finish today?">${esc(s.notes)}</textarea></div>
+  </div>`;
+ document.querySelectorAll("input[type=checkbox][data-i]").forEach(x=>x.onchange=e=>{dayState(selectedDay).checks[+e.target.dataset.i]=e.target.checked;save();renderDayButtons()});
+ document.getElementById("proof").oninput=e=>{dayState(selectedDay).proof=e.target.value;save()};
+ document.getElementById("notes").oninput=e=>{dayState(selectedDay).notes=e.target.value;save()};
+}
+function stats(){let done=0;for(let i=1;i<=30;i++)if(isDone(i))done++;const pct=Math.round(done/30*100);document.getElementById("doneCount").textContent=done;document.getElementById("leftCount").textContent=30-done;document.getElementById("percentText").textContent=pct+"%";document.getElementById("barFill").style.width=pct+"%"}
+function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>t.classList.remove("show"),900)}
+function esc(str=""){return String(str).replace(/[&<>\"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[m]))}
+function attr(str=""){return esc(str).replace(/'/g,"&#039;")}
+document.getElementById("startDate").onchange=e=>setStart(e.target.value);
+document.getElementById("todayBtn").onclick=()=>{selectedDay=currentDay();render()};
+document.getElementById("completeBtn").onclick=()=>{dayState(selectedDay).checks=[true,true,true];save();render()};
+document.getElementById("resetBtn").onclick=()=>{if(confirm("Reset all progress?")){state={};localStorage.removeItem(STORAGE_KEY);render();toast("Reset")}};
+document.getElementById("exportBtn").onclick=()=>{const blob=new Blob([JSON.stringify({startDate:getStart(),state},null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="supriya-tracker-backup.json";a.click();URL.revokeObjectURL(url)};
+document.getElementById("importFile").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const p=JSON.parse(r.result);if(p.startDate)localStorage.setItem(START_KEY,p.startDate);state=p.state||p;localStorage.setItem(STORAGE_KEY,JSON.stringify(state));render();toast("Imported")}catch(err){toast("Import failed")}};r.readAsText(f)};
+selectedDay=currentDay();render();
+</script>
 </body>
 </html>
